@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  db:
+    build: 
+      context: ./etc/databases/sqlServer/
+      dockerfile: Dockerfile
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Admin
+
+  web:
+    build:
+      context: ./src/gateway/
+      dockerfile: Dockerfile
+    ports:
+      - "9001:9001"
+    depends_on:
+      - db
